@@ -15,8 +15,9 @@ class RedirectIfUserHasNotEnabledStripe
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!$request->user()->stripe_account_enabled) {
+        if (!$request->user()->stripe_account_enabled) {
             return redirect()->route('onboarding');
         }
+        return $next($request);
     }
 }
