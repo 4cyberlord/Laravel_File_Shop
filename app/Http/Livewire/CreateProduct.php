@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
@@ -35,7 +36,7 @@ class CreateProduct extends Component
         $this->state['slug'] = Str::slug($title);
     }
 
-    protected $rules = [
+    protected array $rules = [
         'state.title' => 'required|max:255',
         'state.slug' => 'required|max:255|unique:products,slug',
         'state.description' => 'required',
@@ -44,7 +45,7 @@ class CreateProduct extends Component
     ];
 
 
-    public function submit()
+    public function submit(): RedirectResponse
     {
         $this->validate();
 
