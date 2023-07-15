@@ -13,8 +13,10 @@ class ProductIndexController extends Controller
     }
 
 
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        return view('products.index');
+        return view('products.index', [
+            'products' => $request->user()->products()->latest()->get(),
+        ]);
     }
 }
