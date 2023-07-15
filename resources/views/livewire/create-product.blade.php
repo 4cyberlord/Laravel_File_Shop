@@ -53,7 +53,23 @@
             <p class="mt-1 text-sm text-gray-600">
                 {{ __("Attach files that your customers will be able to download.") }}
             </p>
+
+
         </header>
+
+        <div>
+            <input type="file" wire:model="uploads" multiple>
+        </div>
+
+        <ul>
+            @foreach ($files as $file)
+            <li>
+               {{ $file->getClientOriginalName() }}
+               <button type="button" class="text-indigo-500" wire:click="removeFile('{{ $file->getFilename() }}')">Remove</button>
+                </li>
+            </li>
+            @endforeach
+        </ul>
 
     </section>
 

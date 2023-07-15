@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Products;
-
+use Attribute;
 
 class User extends Authenticatable
 {
@@ -52,5 +52,16 @@ class User extends Authenticatable
     public function products()
     {
         return $this->hasMany(Products::class);
+    }
+
+    // When ever price is set on the model take it and convert it into int
+    protected function price(): Attribute
+    {
+
+        return Attribute::make(
+            set: fn (float $price) => $price * 100,
+        )
+
+            ->withoutObjectCashing();
     }
 }

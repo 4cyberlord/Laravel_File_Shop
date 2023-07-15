@@ -4,9 +4,17 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Arr;
 
 class CreateProduct extends Component
 {
+    use WithFileUploads;
+
+    public $uploads = [];
+
+    public $files = [];
+
 
     // public $title;
 
@@ -39,7 +47,26 @@ class CreateProduct extends Component
     {
         $this->validate();
 
-        dd("submit form");
+        // dd("submit form");
+        auth()->user()->products()->create($this->state);
+
+        return redirect()->route('products');
+    }
+
+
+    public function updatedUploads($uploads)
+    {
+        $this->files = array_merge($this->files, $uploads);
+
+        $this->uploads = [];
+    }
+
+
+    public function removeFile($filename)
+    {
+        $this->files = Arr::where($this->files, function ($file) use ($filename) {
+            return $file->getFilename() !== $filename;
+        });
     }
 
 
