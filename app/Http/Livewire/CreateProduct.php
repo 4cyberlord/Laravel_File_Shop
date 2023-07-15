@@ -6,6 +6,7 @@ use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Arr;
+use App\Models\File;
 
 class CreateProduct extends Component
 {
@@ -48,7 +49,23 @@ class CreateProduct extends Component
         $this->validate();
 
         // dd("submit form");
-        auth()->user()->products()->create($this->state);
+        $product = auth()->user()->products()->create($this->state);
+
+
+        // Attach the files after creating the product.
+
+        // Get all the files we have and convert them into a file model and save them in one goal
+
+        $files = collect($this->files)->map(function ($file) {
+            return File::make([
+                'filename' => $file->getClientOriginalName(),
+                'path' => $file->store('files')
+            ]);
+        });
+
+
+        $product->files()->saveMany($files);
+
 
         return redirect()->route('products');
     }

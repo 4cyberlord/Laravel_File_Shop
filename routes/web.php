@@ -27,6 +27,7 @@ Route::get('/onboarding/verify', [StripeOnboardingController::class, 'verify'])-
 Route::get('/dashboard', DashboardController::class)->name('dashboard');
 Route::get('/products', ProductIndexController::class)->name('products');
 Route::get('/products/create', ProductCreateController::class)->name('products.create');
+Route::get('/products/{product}/edit', ProductCreateController::class)->name('products.edit');
 
 
 Route::middleware('auth')->group(function () {
