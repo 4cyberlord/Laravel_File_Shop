@@ -12,10 +12,10 @@ class CreateProduct extends Component
 
     public $state = [
         'title' => null,
-        "slug" => null,
-        "description" => null,
-        "price" => "0.0",
-        "live" => false,
+        'slug' => null,
+        'description' => null,
+        'price' => '0.00',
+        'live' => false,
     ];
 
 
@@ -26,10 +26,22 @@ class CreateProduct extends Component
         $this->state['slug'] = Str::slug($title);
     }
 
-    function submit()
+    protected $rules = [
+        'state.title' => 'required|max:255',
+        'state.slug' => 'required|max:255|unique:products,slug',
+        'state.description' => 'required',
+        'state.price' => 'required|decimal:0,2|min:1',
+        'state.live' => 'boolean'
+    ];
+
+
+    public function submit()
     {
-        dd('submit form');
+        $this->validate();
+
+        dd("submit form");
     }
+
 
     public function render()
     {
