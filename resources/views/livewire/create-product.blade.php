@@ -1,4 +1,5 @@
-<form class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 md:px-8 space-y-12">
+<form wire.submit.prevent="submit" class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 md:px-8 space-y-12">
+    {{ var_dump($state) }}
     <section class="space-y-6">
         <header>
             <h2 class="text-lg font-medium text-gray-900">
@@ -10,9 +11,9 @@
             </p>
         </header>
 
-        {{-- {{  $title }} --}}
+        {{-- {{ $title }} --}}
 
-        {{  var_dump($state) }}
+        {{ var_dump($state) }}
 
 
         <div>
@@ -23,19 +24,26 @@
 
         <div>
             <x-input-label for="slug" :value="__('Slug')" />
-            <x-text-input id="slug" class="block mt-1 w-full" type="text" name="slug" />
+            <x-text-input wire:model="state.slug" id="slug" class="block mt-1 w-full" type="text" name="slug" />
             <x-input-error :messages="$errors->get('slug')" class="mt-2" />
         </div>
 
         <div>
+            <x-input-label for="price" :value="__('Price')" />
+            <x-text-input wire:model="state.price" id="slug" class="block mt-1 w-full" type="text" name="price" />
+            <x-input-error :messages="$errors->get('price')" class="mt-2" />
+        </div>
+
+        <div>
             <x-input-label for="description" :value="__('Description')" />
-            <x-textarea id="description" class="block mt-1 w-full" rows="4" type="text" name="description" />
+            <x-textarea wire:model="state.description" id="description" class="block mt-1 w-full" rows="4" type="text"
+                name="description" />
             <x-input-error :messages="$errors->get('description')" class="mt-2" />
         </div>
 
         <div class="block mt-4">
             <label for="live" class="inline-flex items-center">
-                <input id="live" type="checkbox"
+                <input wire:model="state.live" id="live" type="checkbox"
                     class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="live">
                 <span class="ml-2 text-sm text-gray-600">live</span>
             </label>
