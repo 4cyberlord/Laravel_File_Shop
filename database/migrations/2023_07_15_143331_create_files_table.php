@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('products_id')->constrained()->onDelete('cascade');
             $table->string('filename');
             $table->string('path');
             $table->timestamps();
